@@ -1,19 +1,19 @@
 import React from "react";
 
 class TwitterMessage extends React.Component {
-  constructor(abc) {
+  constructor(props) {
     super();
 
     this.state = {
       message: "",
-      remainingChars: abc.maxChars
+      remainingChars: props.maxChars
     };
   }
 
   handleMessageChange = (e) => {
-    console.log(e.target.value)
     const newMessage = e.target.value;
-    const newRemainingChars = this.state.remainingChars - newMessage.split('').length
+    let newRemainingChars = this.state.remainingChars;
+    newMessage.length > this.state.message.length ? newRemainingChars-- : newRemainingChars++;
     this.setState({
       message: newMessage,
       remainingChars: newRemainingChars
@@ -31,6 +31,9 @@ class TwitterMessage extends React.Component {
           value={this.state.message} 
           id="message" 
         />
+        <div>
+          <p>Remaining Characters: {this.state.remainingChars}</p>
+        </div>
       </div>
     );
   }
